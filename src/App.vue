@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from "vue";
 const msg = ref("Hello from sd19311");
+const newItem = ref("");
+const newItemPriority = ref("low");
 const items = ref([
   { id: 1, label: "1 product A" },
   { id: 2, label: "3 product B" },
@@ -11,15 +13,47 @@ const items = ref([
 <template>
   <h1>{{ msg }}</h1>
   <br />
-  <input v-model="msg" />
+
+  <input
+    type="text"
+    placeholder="Add an Item"
+    v-model="newItem"
+  />
+  {{ newItem }} <br />
+
+  <label>
+    <input
+      type="radio"
+      value="low"
+      v-model="newItemPriority"
+    />
+    Low
+  </label>
+  <label>
+    <input
+      type="radio"
+      value="hight"
+      v-model="newItemPriority"
+    />
+    Hight
+  </label>
   <br />
-  <input v-model="msg" />
+  {{ newItemPriority }}
+  <br />
+  <label>
+    Priority:
+    <select v-model="newItemPriority">
+      <option value="low">Low</option>
+      <option value="hight">Hight</option>
+    </select>
+  </label>
+
   <ul>
     <li
-      v-for="item in items"
-      :key="item.id"
+      v-for="({ id, label }, index) in items"
+      :key="id"
     >
-      {{ item.label }}
+      {{ index }} {{ label }} 😂😂😂
     </li>
   </ul>
 </template>
