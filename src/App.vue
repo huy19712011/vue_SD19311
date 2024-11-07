@@ -10,15 +10,18 @@ const items = ref([
   { id: 2, label: "3 product B" },
   { id: 3, label: "6 product C" },
 ]);
+
+const saveItem = () => {
+  items.value.push({ id: items.value.length + 1, label: newItem.value });
+  newItem.value = "";
+};
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
   <br />
 
-  <form
-    v-on:submit.prevent="items.push({ id: items.length + 1, label: newItem })"
-  >
+  <form v-on:submit.prevent="saveItem">
     <input
       type="text"
       placeholder="Add an Item"
