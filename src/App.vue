@@ -3,6 +3,8 @@ import { ref } from "vue";
 const msg = ref("Hello from sd19311");
 const newItem = ref("");
 const newItemPriority = ref("low");
+
+const iceCreamFlavors = ref(["vanilla"]);
 const items = ref([
   { id: 1, label: "1 product A" },
   { id: 2, label: "3 product B" },
@@ -14,39 +16,26 @@ const items = ref([
   <h1>{{ msg }}</h1>
   <br />
 
-  <input
-    type="text"
-    placeholder="Add an Item"
-    v-model="newItem"
-  />
-  {{ newItem }} <br />
+  <form
+    v-on:submit.prevent="items.push({ id: items.length + 1, label: newItem })"
+  >
+    <input
+      type="text"
+      placeholder="Add an Item"
+      v-model="newItem"
+    />
+    <br />
+    <label>
+      Priority:
+      <select v-model="newItemPriority">
+        <option value="low">Low</option>
+        <option value="hight">Hight</option>
+      </select>
+    </label>
+    <br />
 
-  <label>
-    <input
-      type="radio"
-      value="low"
-      v-model="newItemPriority"
-    />
-    Low
-  </label>
-  <label>
-    <input
-      type="radio"
-      value="hight"
-      v-model="newItemPriority"
-    />
-    Hight
-  </label>
-  <br />
-  {{ newItemPriority }}
-  <br />
-  <label>
-    Priority:
-    <select v-model="newItemPriority">
-      <option value="low">Low</option>
-      <option value="hight">Hight</option>
-    </select>
-  </label>
+    <button>Save Item</button>
+  </form>
 
   <ul>
     <li
