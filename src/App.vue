@@ -5,23 +5,50 @@ const newItem = ref("");
 const newItemPriority = ref("low");
 
 const iceCreamFlavors = ref(["vanilla"]);
+
+const editing = ref(false);
 const items = ref([
-  { id: 1, label: "1 product A" },
-  { id: 2, label: "3 product B" },
-  { id: 3, label: "6 product C" },
+  // { id: 1, label: "1 product A" },
+  // { id: 2, label: "3 product B" },
+  // { id: 3, label: "6 product C" },
 ]);
 
 const saveItem = () => {
   items.value.push({ id: items.value.length + 1, label: newItem.value });
   newItem.value = "";
 };
+
+const doEdit = () => {
+  editing.value = !editing.value;
+  newItem.value = "";
+};
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
+  <div>
+    <h1>{{ msg }}</h1>
+    <br />
+    <button
+      v-if="editing"
+      v-on:click="doEdit()"
+    >
+      Cancel
+    </button>
+    <button
+      v-else
+      @click="doEdit"
+    >
+      Add Item
+    </button>
+  </div>
   <br />
 
-  <form v-on:submit.prevent="saveItem">
+  <a v-bind:href="newItem">Dynamic Link</a>
+
+  <form
+    v-on:submit.prevent="saveItem"
+    v-if="editing"
+  >
     <input
       type="text"
       placeholder="Add an Item"
@@ -37,7 +64,7 @@ const saveItem = () => {
     </label>
     <br />
 
-    <button>Save Item</button>
+    <button v-bind:disabled="newItem.length < 3">Save Item</button>
   </form>
 
   <ul>
@@ -48,6 +75,8 @@ const saveItem = () => {
       {{ index }} {{ label }} 😂😂😂
     </li>
   </ul>
+
+  <p v-if="!items.length">Nothing to see here</p>
 </template>
 
 <style scoped>
